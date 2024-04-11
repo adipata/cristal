@@ -23,8 +23,10 @@ function getNumber(NumBucket $b)
 function getBits($n){
     global $bitArrayPointer;
     global $bitArray;
+
     $s="";
     $p=$bitArrayPointer;
+    if(sizeof($bitArray)<1) return "";
     for($i=0;$i<$n;$i++){
         $s.=$bitArray[$p];
         $p++;
