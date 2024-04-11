@@ -27,7 +27,7 @@ The following HEX `03 0b 95` would be translated to `11 1011 101110010101`.
 For the following input, we plan to get 5 numbers between 1 and 50:
 
 ```
-111100000011111110110000001111111011000000111111101100000011111110
+111100001110010111101011001101110010111100101001000001010111011111111011001010001010111110001001111001010110111011110000001001000010011100010110011001111000
 ```
 
 First thing is to determine the number of bits necessary to represent the maximum, so for 50 which would be `110010` in binary, we need 6 bits.
@@ -36,22 +36,30 @@ To get the first number of the 5 required, we are doing the following:
 
 1. Get the first 6 bits from the input data: `111100`.
 2. The resulted number is **60** which is bigger than the maximum.
-3. We skip one bit and we get the following 6 bits: `111000`.
-4. The resulted number is **56** which is still too big.
-5. We skip another bit and we take the following 6 bits: `110000`.
-6. We get number **48** which is ok and we can save it.
-
-When we manage to get a good number, we jump over the number bits, in this case 6 of them, and then we try to get the next number.
-
-In our case, we skipped over two bits so we got to a correct number, then we skip over this number an get the following 6 bits which are `001111` and translate to **15** which is also correct, so it is our second number.
+3. We reduce the number of bits from 6 to 5 to get a smaller number: `11100`. 
+4. We translate the 5 bits to number **30** which is ok and we can save it.
+5. Skip the 5 used bits.
+6. Get next 6 bits: `000111`.
+7. We translate the 6 bits to number **7** which is ok and we can save it.
+8. Skip the 6 used bits.
+9. Get next 6 bits: `001011`.
+10. We translate the 6 bits to number **11** which is ok and we can save it.
+11. ... we continue processing the bit array until we get all the necessary numbers.
 
 ```
-11 110000 001111 1110110000001111111011000000111111101100000011111110
+11110 000111 001011 1101011001101110010111100101001000001010111011111111011001010001010111110001001111001010110111011110000001001000010011100010110011001111000
 ```
 
 And we continue like this until we get all our numbers.
 
 If we get to the end of the data, we continue with the beginning. So we look at the bits like they would be on a circle.
+
+> [!IMPORTANT]
+> 
+> Usually the maximum number that can be composed using all the necessary bits, will be greater than the maximum accepted.
+> For example 50 is represented on 6 bits, `110010`, but using 6 bits we can get a maximum of 63 `111111` which is possible when using random data.
+> To prevent getting numbers bigger than we need, without wasting any bits, we are reducing the number of used bits until we get a number that fits in the required interval. 
+
 
 
 

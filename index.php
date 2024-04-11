@@ -3,18 +3,17 @@ include ("NumBucket.php");
 
 function getNumber(NumBucket $b)
 {
-    $binmax=strlen(decbin($b->max));
     for($i=0;$i<$b->total;$i++){
+        $binmax=strlen(decbin($b->max));
         $nf=-1;
-        while($nf<0 && $nf>-100) {
+        while($nf<0 && $binmax>0) {
             $nb = getBits($binmax);
             $n = bindec($nb);
             if($n>=$b->min && $n<=$b->max){
                 advancePointer($binmax);
                 $nf=$n;
             } else {
-                advancePointer(1);
-                $nf--;
+                $binmax--;
             }
         }
         $b->numbers[]=$nf;
@@ -89,7 +88,7 @@ $numBuckets=array();
 array_push($numBuckets,
     new NumBucket(1,50,5),
     new NumBucket(1, 12, 2),
-    new NumBucket(1,49,5),
+    new NumBucket(1,49,6),
     new NumBucket(1,10,1)
 );
 
