@@ -28,7 +28,7 @@ function getBits($n){
     $p=$bitArrayPointer;
     if(sizeof($bitArray)<1) return "";
     for($i=0;$i<$n;$i++){
-        $s.=$bitArray[$p];
+        $s=$bitArray[$p].$s;
         $p++;
         if($p>=sizeof($bitArray)){
             $p=$bitArrayPointer;
@@ -90,7 +90,7 @@ $numBuckets=array();
 array_push($numBuckets,
     new NumBucket(1,50,5),
     new NumBucket(1, 12, 2),
-    new NumBucket(1,49,6),
+    new NumBucket(1,49,5),
     new NumBucket(1,10,1)
 );
 
